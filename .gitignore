@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Logs and debugging
+*.log
+*.out
+*.err
+*.trace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Dependency directories
+node_modules/
+
+# Generated documentation
+docs/_build/
+
+# Application-specific
+diagnose_six.py  # If this is generated dynamically
+*.sqlite3         # If SQLite databases are used
+*.db              # General database files
+
+# Matplotlib cache
+.matplotlib/
+
+# Pytest cache
+.pytest_cache/
+
+# Ignore large data files
+*.csv
+*.tsv
+*.json
+*.xml
+*.h5
+*.pickle
+
+# Ignore specific files for this project
+rag/__pycache__/
+rag/*.pyc
