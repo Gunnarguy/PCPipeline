@@ -461,22 +461,13 @@ class GuidedRAGInterface(tk.Tk):
                 messagebox.showerror("Index Creation Error", f"Cannot create new index. Max of {Config.MAX_INDEXES} reached.")
                 return
 
-            # Create an index using the newer API
-            if hasattr(pc, 'create_index'):
-                # Older API style
-                pc.create_index(
-                    name=new_index,
-                    dimension=Config.EMBEDDING_DIM,
-                    metric="cosine"
-                )
-            else:
-                # Newer API style (already in your code)
-                pc.create_index(
-                    name=new_index,
-                    dimension=Config.EMBEDDING_DIM,
-                    metric="cosine",
-                    spec={"serverless": {"cloud": "aws", "region": "us-east-1"}}
-                )
+            # Create an index using the newer API style
+            pc.create_index(
+                name=new_index,
+                dimension=Config.EMBEDDING_DIM,
+                metric="cosine",
+                spec={"serverless": {"cloud": "aws", "region": "us-east-1"}} # Ensure spec is always provided
+            )
 
             if wait_for_index_ready(new_index):
                 messagebox.showinfo("Index Created", f"Index '{new_index}' is ready.")

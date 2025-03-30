@@ -1,69 +1,41 @@
-# Byte-compiled / optimized / compiled Python files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-venv/
-env/
-.venv/
-
 # Environment variables
 .env
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Logs and debugging
-*.log
-*.out
-*.err
-*.trace
+# Virtual environment
+.venv/
+venv/
+env/
 
-# OS-specific files
-.DS_Store
-Thumbs.db
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# IDE-specific files
+# IDE / Editor specific
 .vscode/
 .idea/
-
-# Build artifacts
-build/
-dist/
-*.egg-info/
-
-# Temporary files
-*.tmp
-*.temp
 *.swp
 *.swo
-
-# Dependency directories
-node_modules/
-
-# Generated documentation
-docs/_build/
-
-# Application-specific
-diagnose_six.py  # If this is generated dynamically
-*.sqlite3         # If SQLite databases are used
-*.db              # General database files
-
-# Matplotlib cache
-.matplotlib/
-
-# Pytest cache
-.pytest_cache/
-
-# Ignore large data files
-*.csv
-*.tsv
-*.json
-*.xml
-*.h5
-*.pickle
-
-# Ignore specific files for this project
-rag/__pycache__/
-rag/*.pyc
+*~

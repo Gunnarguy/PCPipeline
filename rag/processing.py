@@ -1,8 +1,15 @@
-import os, sys, time, hashlib, logging, traceback
-import threading, queue
+import os, sys, time, hashlib, logging
+# import threading, queue # Unused
 from pathlib import Path
-from typing import Any, List, Optional, Dict, Tuple, Union, Generator
-import magic, textract, fitz, pytesseract
+from typing import Any, List, Optional, Dict, Tuple # Removed Union, Generator
+import magic, fitz, pytesseract
+try:
+    # import textract # Already commented out
+    # HAS_TEXTRACT = True
+    HAS_TEXTRACT = False # Set to False since textract is commented out
+except ImportError:
+    HAS_TEXTRACT = False
+    print("Warning: textract module not available. Some document types may not be processed correctly.")
 from PIL import Image
 import torch
 import pinecone
@@ -12,8 +19,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from dotenv import load_dotenv
 from rag.config import Config
 import warnings
-import tiktoken  # For better token counting visualization
-import pandas as pd  # For better data handling during processing
+import tiktoken
+# import pandas as pd # Unused
 
 # Suppress specific transformers warnings
 warnings.filterwarnings("ignore", message=".*BatchEncoding.*")
@@ -176,7 +183,14 @@ class FileProcessor:
         document_exts = ['.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.pdf']
         if suffix in document_exts:
             try:
-                return textract.process(str(path), **self.textract_config).decode('utf-8')
+                if HAS_TEXTRACT:
+                    # return textract.process(str(path), **self.textract_config).decode('utf-8') # Commented out textract call
+                    logging.warning(f"Skipping {path} due to textract being unavailable (document extension match).")
+                    return None
+                else:
+                    # This branch is now always taken since HAS_TEXTRACT is False
+                    print(f"Cannot process {path}: textract not available")
+                    return None
             except Exception as e:
                 logging.debug(f"Textract failed on binary file {path}: {e}")
         
@@ -197,7 +211,14 @@ class FileProcessor:
         
         # As a last resort, try textract generically
         try:
-            return textract.process(str(path)).decode('utf-8', errors='ignore')
+            if HAS_TEXTRACT:
+                # return textract.process(str(path)).decode('utf-8', errors='ignore') # Commented out textract call
+                logging.warning(f"Skipping {path} due to textract being unavailable (generic fallback).")
+                return None
+            else:
+                 # This branch is now always taken since HAS_TEXTRACT is False
+                print(f"Cannot process {path}: textract not available")
+                return None
         except Exception:
             # If all attempts failed, log at debug level instead of warning or error
             logging.debug(f"All extraction methods failed for binary file {path}")
@@ -257,7 +278,16 @@ class FileProcessor:
     def _process_generic(self, path: Path) -> Optional[str]:
         """Extract text using textract; fallback to direct file reading."""
         try:
-            return textract.process(str(path), **self.textract_config).decode('utf-8')
+            if HAS_TEXTRACT:
+                # return textract.process(str(path), **self.textract_config).decode('utf-8') # Commented out textract call
+                logging.warning(f"Skipping {path} due to textract being unavailable (generic processing).")
+                return None
+            else:
+                 # This branch is now always taken since HAS_TEXTRACT is False
+                print(f"Cannot process {path}: textract not available")
+                # Fallback to direct file reading is handled in the except block below
+                # We need to raise an error here or return None to trigger the fallback
+                return None # Explicitly return None if textract isn't available
         except Exception as e:
             logging.error(f"Text extraction error ({path}): {e}")
             try:
