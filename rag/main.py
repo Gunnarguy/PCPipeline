@@ -55,7 +55,7 @@ def main() -> None:
         if "pinecone" in str(e).lower():
             print("\nERROR: Problem with Pinecone package.")
             print("Please install Pinecone SDK with:")
-            print("  pip install pinecone-client")
+            print("  pip install pinecone")
             sys.exit(1)
         else:
             print(f"Import error: {e}")
