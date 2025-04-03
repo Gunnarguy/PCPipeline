@@ -1,3 +1,4 @@
+# cSpell:ignore dotenv levelname
 import sys
 import os
 import logging
@@ -25,7 +26,6 @@ def main() -> None:
             format="%(asctime)s [%(levelname)s] %(message)s",
             handlers=[logging.StreamHandler()]
         )
-        
         # Import here to avoid circular imports
         try:
             from rag.processing import init_system
@@ -35,20 +35,21 @@ def main() -> None:
             from rag.processing import pc
             if pc is None:
                 print("\nERROR: Failed to initialize Pinecone.")
-                print("Make sure your PINECONE_API_KEY environment variable is set")
+                print("Make sure your PINECONE_API_KEY environment "
+                      "variable is set")
                 print("correctly.")
                 print("Try creating a .env file in the project root with:")
                 print("PINECONE_API_KEY=your-api-key")
                 print("OPENAI_API_KEY=your-api-key")
                 sys.exit(1)
-                
             # If we got here, continue with the application
             from rag.gui import GuidedRAGInterface
             app = GuidedRAGInterface()
             app.mainloop()
         except ModuleNotFoundError as e:
             print(f"\nModule import error: {e}")
-            print("Make sure the 'rag' package exists and is properly installed.")
+            print("Make sure the 'rag' package exists and is properly "
+                  "installed.")
             print("Try running: pip install -e .")
             sys.exit(1)
     except ImportError as e:
